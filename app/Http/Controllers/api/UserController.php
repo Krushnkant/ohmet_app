@@ -11,19 +11,19 @@ class UserController extends BaseController
 {
     public function getUsers(Request $request){
         $users = User::where('role',4);
-        if (isset($request->to_age) && $request->to_age!="" &&  $request->from_age==""){
-            $users = $users->where("age",">", $request->to_age);
+        if (isset($request->from_age) && $request->from_age!="" &&  $request->to_age==""){
+            $users = $users->where("age",">", $request->from_age);
         }
-        if ($request->to_age=="" && isset($request->from_age) && $request->from_age!=""){
-            $users = $users->where("age","<", $request->from_age);
+        if ($request->from_age=="" && isset($request->to_age) && $request->to_age!=""){
+            $users = $users->where("age","<", $request->to_age);
         }
-        if (isset($request->to_age) && $request->to_age!="" && isset($request->from_age) && $request->from_age!=""){
-            $users = $users->whereRaw("age between '".$request->to_age."' and '".$request->from_age."'");
+        if (isset($request->from_age) && $request->from_age!="" && isset($request->to_age) && $request->to_age!=""){
+            $users = $users->whereRaw("age between '".$request->from_age."' and '".$request->to_age."'");
         }
         if(isset($request->language_id) && $request->language_id > 0){
-            $language_id = $request->language_id;
+            $language_id = explode(',',$request->language_id);
             $users =  $users->WhereHas('user_language',function ($mainQuery) use($language_id) {
-                $mainQuery->where('language_id', '=',$language_id);
+                $mainQuery->whereIn('language_id', '=',$language_id);
             });  
         }
         $users =  $users->where('estatus',1)->get();
