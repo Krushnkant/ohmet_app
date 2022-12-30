@@ -22,8 +22,10 @@ class UserController extends BaseController
         }
         if(isset($request->language_id) && $request->language_id > 0){
             $language_id = explode(',',$request->language_id);
+            
             $users =  $users->WhereHas('user_language',function ($mainQuery) use($language_id) {
-                $mainQuery->whereIn('language_id', '=',$language_id);
+              
+                $mainQuery->whereIn('language_id',$language_id);
             });  
         }
         $users =  $users->where('estatus',1)->get();
