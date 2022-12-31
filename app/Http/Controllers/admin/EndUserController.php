@@ -48,10 +48,11 @@ class EndUserController extends Controller
                 0=>'id',
                 1=>'profile_pic',
                 2=> 'contact_info',
-                3=> 'login_info',
-                4=> 'estatus',
-                5=> 'created_at',
-                6=> 'action',
+                3=> 'other_info',
+                4=> 'user',
+                5=> 'estatus',
+                6=> 'created_at',
+                7=> 'action',
             );
 
             $totalData = User::whereIn('role', ['3','4'])->WhereNotNull('first_name');
@@ -146,13 +147,19 @@ class EndUserController extends Controller
                         $contact_info .= '<span><i class="fa fa-phone" aria-hidden="true"></i> ' .$user->mobile_no .'</span>';
                     }
 
-                    $login_info = '';
-                    
-                    if (isset($user->email)){
-                        $login_info .= '<span> ' .$user->email .'</span>';
+                    $other_info = '';
+                    if ($user->gender == 1){
+                        $other_info = '<span><i class="fa fa-male" aria-hidden="true"  style="font-size: 20px; margin-right: 5px"></i> Male</span>';
+                    } else if($user->gender == 2){
+                        $other_info = '<span><i class="fa fa-female" aria-hidden="true" style="font-size: 20px; margin-right: 5px"></i> Female</span>';
+                    } else {
+                        $other_info = '<span><i class="fa fa-male" aria-hidden="true" style="font-size: 20px; margin-right: 5px"></i> Other</span>';
                     }
-                    if (isset($user->decrypted_password)){
-                        $login_info .= '<span> ' .$user->decrypted_password .'</span>';
+                    if($user->age != NULL){
+                        $other_info .= '<span><i class="fa fa-birthday-cake" aria-hidden="true"></i> '.$user->age.'</span>';
+                    }
+                    if($user->location != NULL){
+                        $other_info .= '<span><i class="fa fa-map-marker" aria-hidden="true"></i> '.$user->location.'</span>';
                     }
 
                     $full_name = "";
@@ -173,9 +180,17 @@ class EndUserController extends Controller
                         $action .= '<button id="deleteEndUserBtn" class="btn btn-gray text-danger btn-sm" data-toggle="modal" data-target="#DeleteEndUserModal" onclick="" data-id="' .$user->id. '"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
                     }
 
+                    $role = '';
+                    if ($user->role == 3){
+                        $role = 'Real User';
+                    }else{
+                        $role = 'Fake User';
+                    }
+
                     $nestedData['profile_pic'] = '<img src="'. $profile_pic .'" width="50px" height="50px" alt="Profile Pic"><span>'.$full_name.'</span>';
                     $nestedData['contact_info'] = $contact_info;
-                    $nestedData['login_info'] = $login_info;
+                    $nestedData['login_info'] = $other_info;
+                    $nestedData['user'] = $role;
                     $nestedData['estatus'] = $estatus;
                     $nestedData['created_at'] = date('d-m-Y h:i A', strtotime($user->created_at));
                     $nestedData['action'] = $action;
@@ -196,7 +211,7 @@ class EndUserController extends Controller
     }
 
     public function addorupdateEnduser(Request $request){
-     
+       
         $messages = [
             'first_name.required' =>'Please provide a First Name',
             'last_name.required' =>'Please provide a Last Name',
@@ -291,14 +306,26 @@ class EndUserController extends Controller
         if($user){
 
             $oldlanguageids = UserLanguage::where('user_id',$user->id)->get()->pluck('language_id')->toArray();
-           
-            foreach($request->language_id as $language){
+
+            if(isset($request->language_id) && count($request->language_id) > 0){
+                foreach($request->language_id as $language){
+                    if(!in_array($language,$oldlanguageids)){
+                        $UserLanguage = new UserLanguage();
+                        $UserLanguage->user_id = $user->id;
+                        $UserLanguage->language_id = $language;
+                        $UserLanguage->save();
+                    }
+                }
+            }else{
+              $languages = Language::get()->pluck('id')->toArray();
+              foreach($languages as $language){
                 if(!in_array($language,$oldlanguageids)){
                     $UserLanguage = new UserLanguage();
                     $UserLanguage->user_id = $user->id;
                     $UserLanguage->language_id = $language;
                     $UserLanguage->save();
                 }
+              }
             }
            
             foreach($oldlanguageids as $oldlanguageid){

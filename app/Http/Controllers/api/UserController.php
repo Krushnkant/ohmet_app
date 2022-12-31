@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Language;
+use App\Models\PriceRange;
 
 class UserController extends BaseController
 {
@@ -54,9 +55,15 @@ class UserController extends BaseController
         }
 
         $languages = Language::where('estatus',1)->get(['id','title']);
+        $pricerange = PriceRange::where('estatus',1)->get(['id','price','coin']);
 
         $data['users'] = $users_arr;
         $data['languages'] = $languages;
+        $data['pricerange'] = $pricerange;
         return $this->sendResponseWithData($data,"Users Retrieved Successfully.");
     }
+
+    
+
+
 }

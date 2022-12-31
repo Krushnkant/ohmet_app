@@ -73,12 +73,23 @@ class ProjectPageSeeder extends Seeder
         ProjectPage::create([
             'id' => 6,
             'parent_menu' => 0,
+            'label' => 'Price',
+            'route_url' => 'admin.pricerange.list',
+            'is_display_in_menu' => 0,
+            'inner_routes' => 'admin.pricerange.list,admin.pricerange.addorupdate,admin.allpricerangeslist,admin.pricerange.changepricerangestatus,admin.pricerange.edit,admin.pricerange.delete,admin.pricerange.permission,admin.pricerange.savepermission',
+            'icon_class' => 'fa fa-money',
+            'sr_no' => 4
+        ]);
+
+        ProjectPage::create([
+            'id' => 7,
+            'parent_menu' => 0,
             'label' => 'Settings',
             'route_url' => 'admin.settings.list',
             'icon_class' => 'fa fa-cog',
             'is_display_in_menu' => 0,
             'inner_routes' => 'admin.settings.list,admin.settings.edit',
-            'sr_no' => 4
+            'sr_no' => 5
         ]);
 
         

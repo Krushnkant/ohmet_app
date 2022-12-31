@@ -53,6 +53,13 @@ Route::group(['prefix'=>'admin','middleware'=>['auth','userpermission'],'as'=>'a
         Route::post('updateInvoiceSetting',[\App\Http\Controllers\admin\SettingsController::class,'updateInvoiceSetting'])->name('settings.updateInvoiceSetting');
         Route::get('settings/edit',[\App\Http\Controllers\admin\SettingsController::class,'editSettings'])->name('settings.edit');
 
+        Route::get('pricerange',[\App\Http\Controllers\admin\PriceRangeController::class,'index'])->name('pricerange.list');
+        Route::post('addorupdatepricerange',[\App\Http\Controllers\admin\PriceRangeController::class,'addorupdatepricerange'])->name('pricerange.addorupdate');
+        Route::post('allpricerangeslist',[\App\Http\Controllers\admin\PriceRangeController::class,'allpricerangeslist'])->name('allpricerangeslist');
+        Route::get('changepricerangestatus/{id}',[\App\Http\Controllers\admin\PriceRangeController::class,'changepricerangestatus'])->name('pricerange.changepricerangestatus');
+        Route::get('pricerange/{id}/edit',[\App\Http\Controllers\admin\PriceRangeController::class,'editpricerange'])->name('pricerange.edit');
+        Route::get('pricerange/{id}/delete',[\App\Http\Controllers\admin\PriceRangeController::class,'deletepricerange'])->name('pricerange.delete');
+
 });
 
 Route::group(['middleware'=>['auth']],function (){

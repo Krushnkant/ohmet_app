@@ -46,7 +46,8 @@
                                     <th>No</th>
                                     <th>Profile</th>
                                     <th>Contact Info</th>
-                                    <th>Login Info</th>
+                                    <th>Other Info</th>
+                                    <th>User</th>
                                     <th>User Status</th>
                                     <th>Registration Date</th>
                                     <th>Other</th>
@@ -57,7 +58,8 @@
                                     <th>No</th>
                                     <th>Profile</th>
                                     <th>Contact Info</th>
-                                    <th>Login Info</th>
+                                    <th>Other Info</th>
+                                    <th>User</th>
                                     <th>User Status</th>
                                     <th>Registration Date</th>
                                     <th>Other</th>
@@ -286,9 +288,10 @@ function end_user_page_tabs(tab_type='',is_clearState=false) {
             { "width": "145px", "targets": 1 },
             { "width": "145px", "targets": 2 },
             { "width": "200px", "targets": 3 },
-            { "width": "120px", "targets": 4 },
+            { "width": "50px", "targets": 4 },
             { "width": "120px", "targets": 5 },
-            { "width": "180px", "targets": 6 },
+            { "width": "120px", "targets": 6 },
+            { "width": "180px", "targets": 7 },
         ],
         "columns": [
             {data: 'id', name: 'id', class: "text-center", orderable: false,
@@ -299,6 +302,7 @@ function end_user_page_tabs(tab_type='',is_clearState=false) {
             {data: 'profile_pic', name: 'profile_pic', class: "text-center multirow"},
             {data: 'contact_info', name: 'contact_info', class: "text-left multirow", orderable: false},
             {data: 'login_info', name: 'login_info', class: "text-left multirow", orderable: false},
+            {data: 'user', name: 'user', class: "text-left multirow", orderable: false},
             {data: 'estatus', name: 'estatus', orderable: false, searchable: false, class: "text-center"},
             {data: 'created_at', name: 'created_at', searchable: false, class: "text-left"},
             {data: 'action', name: 'action', orderable: false, searchable: false, class: "text-center"},
