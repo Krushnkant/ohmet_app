@@ -84,12 +84,23 @@ class ProjectPageSeeder extends Seeder
         ProjectPage::create([
             'id' => 7,
             'parent_menu' => 0,
+            'label' => 'Message',
+            'icon_class' => 'fa fa-file-text',
+            'route_url' => 'admin.messages.list',
+            'is_display_in_menu' => 0,
+            'inner_routes' => 'admin.messages.list,admin.messages.add,admin.messages.save,admin.allmessagelist,admin.messages.changemessagestatus,admin.messages.delete,admin.messages.edit',
+            'sr_no' => 5
+        ]);
+
+        ProjectPage::create([
+            'id' => 8,
+            'parent_menu' => 0,
             'label' => 'Settings',
             'route_url' => 'admin.settings.list',
             'icon_class' => 'fa fa-cog',
             'is_display_in_menu' => 0,
             'inner_routes' => 'admin.settings.list,admin.settings.edit',
-            'sr_no' => 5
+            'sr_no' => 6
         ]);
 
         

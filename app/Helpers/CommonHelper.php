@@ -68,6 +68,73 @@ function send_sms($mobile_no, $otp){
 //    echo $response;
 }
 
+function sendPushNotificationcustomers($id,$data)
+{
+   
+        $tokens_android = \App\Models\CustomerDeviceToken::where('user_id',$id)->where('device_type','android')->pluck('token')->all();
+        $tokens_ios = \App\Models\CustomerDeviceToken::where('user_id',$id)->where('device_type','ios')->pluck('token')->all();
+        if (count($tokens_android) == 0 && count($tokens_ios) == 0) {
+            return false;
+        }
+        
+        if (isset($tokens_ios) && !empty($tokens_ios)){
+            $ios_fields = array(
+                'registration_ids' => $tokens_ios,
+                'data' => $data,
+                'notification' => array(
+                    "title" => $data['title'],
+                    "body" => $data['message'],
+                    "image" => url($data['image']),
+                    "priority" => "high",
+                    "sound" => "default",
+                )
+            );
+            sendNotification($ios_fields,"ios");
+        }
+
+        if (isset($tokens_android) && !empty($tokens_android)){
+            $android_fields = array(
+                'registration_ids' => $tokens_android,
+                'data' => $data,
+                'notification' => array(
+                    "title" => $data['title'],
+                    "body" => $data['message'],
+                    "image" => url($data['image']),
+                    "priority" => "high",
+                    "sound" => "default",
+                )
+            );
+            sendNotification($android_fields,"android");
+        }
+        return true;
+    
+}
+
+function sendNotification($data,$type){
+    $api_key = env('ANDROID_NOTIFICATION_KEY');
+    if($type == "ios"){
+        $api_key = env('IOS_NOTIFICATION_KEY');
+    }
+    $headers = array('Authorization: key=' . $api_key, 'Content-Type: application/json');
+    $url = 'https://fcm.googleapis.com/fcm/send';
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    $result = curl_exec($ch);
+    curl_close($ch);
+
+    $data = explode(':', $result);
+    $sucess = explode(",", $data[2]);
+
+    return true;
+}
+
 
 
 

@@ -40,6 +40,9 @@ class SettingsController extends Controller
             'company_name' => 'required',
             'company_logo' => 'image|mimes:jpeg,png,jpg',
             'company_favicon' => 'image|mimes:jpeg,png,jpg',
+            'number_of_users' => 'required',
+            'number_of_messages' => 'required',
+            'message_duration_time' => 'required',
             
         ], $messages);
 
@@ -52,6 +55,9 @@ class SettingsController extends Controller
             return response()->json(['status' => '400']);
         }
         $Settings->company_name = $request->company_name;
+        $Settings->number_of_users = $request->number_of_users;
+        $Settings->number_of_messages = $request->number_of_messages;
+        $Settings->message_duration_time = $request->message_duration_time;
     
         $old_image = $Settings->company_logo;
         if ($request->hasFile('company_logo')) {

@@ -35,7 +35,7 @@
                                 </thead>
 
                                 <tbody>
-                                <tr>
+                                    <tr>
                                         <th style="width: 50%">Company Name</th>
                                         <td><span id="company_name_val">{{ $Settings->company_name }}</span></td>
                                     </tr>
@@ -60,11 +60,18 @@
                                             @endif
                                         </td>
                                     </tr>
-
-                                    
-                                    
-
-                                   
+                                    <tr>
+                                        <th style="width: 50%">Send Message Number Of User</th>
+                                        <td><span id="number_of_users_val">{{ $Settings->number_of_users }}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width: 50%">Send User Number Of Message</th>
+                                        <td><span id="number_of_messages_val">{{ $Settings->number_of_messages }}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width: 50%">Send User Message Duration Time</th>
+                                        <td><span id="message_duration_time_val">{{ $Settings->message_duration_time }} Sec</span></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -96,20 +103,42 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                            <label class="col-form-label" for="Logo">Company Logo <span class="text-danger">*</span>
-                            </label>
-                            <input type="file" class="form-control-file" id="company_logo" name="company_logo" placeholder="">
-                            <div id="company_logo-error" class="invalid-feedback animated fadeInDown" style="display: none;"></div>
-                            <img src="{{ url('images/placeholder_image.png') }}" class="" id="company_logo_image_show" height="50px" width="50px" style="margin-top: 5px">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <label class="col-form-label" for="Logo">Company Logo <span class="text-danger">*</span>
+                                </label>
+                                <input type="file" class="form-control-file" id="company_logo" name="company_logo" placeholder="">
+                                <div id="company_logo-error" class="invalid-feedback animated fadeInDown" style="display: none;"></div>
+                                <img src="{{ url('images/placeholder_image.png') }}" class="" id="company_logo_image_show" height="50px" width="50px" style="margin-top: 5px">
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <label class="col-form-label" for="favicon">Company Favicon <span class="text-danger">*</span>
+                                </label>
+                                <input type="file" class="form-control-file" id="company_favicon" name="company_favicon" placeholder="">
+                                <div id="company_favicon-error" class="invalid-feedback animated fadeInDown" style="display: none;"></div>
+                                <img src="{{ url('images/placeholder_image.png') }}" class="" id="company_favicon_image_show" height="50px" width="50px" style="margin-top: 5px">
+                            </div>
                         </div>
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                            <label class="col-form-label" for="favicon">Company Favicon <span class="text-danger">*</span>
-                            </label>
-                            <input type="file" class="form-control-file" id="company_favicon" name="company_favicon" placeholder="">
-                            <div id="company_favicon-error" class="invalid-feedback animated fadeInDown" style="display: none;"></div>
-                            <img src="{{ url('images/placeholder_image.png') }}" class="" id="company_favicon_image_show" height="50px" width="50px" style="margin-top: 5px">
-                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <label class="col-form-label" for="number_of_users">Send Message Number Of User <span class="text-danger">*</span>
+                                </label>
+                                <input type="number" class="form-control input-flat" id="number_of_users" name="number_of_users" placeholder="">
+                                <div id="number_of_users-error" class="invalid-feedback animated fadeInDown" style="display: none;"></div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <label class="col-form-label" for="number_of_messages">Send User Number Of Message <span class="text-danger">*</span>
+                                </label>
+                                <input type="number" class="form-control input-flat" id="number_of_messages" name="number_of_messages" placeholder="">
+                                <div id="number_of_messages-error" class="invalid-feedback animated fadeInDown" style="display: none;"></div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <label class="col-form-label" for="message_duration_time">Send User Message Duration Time (Sec) <span class="text-danger">*</span>
+                                </label>
+                                <input type="number" class="form-control input-flat" id="message_duration_time" name="message_duration_time" placeholder="">
+                                <div id="message_duration_time-error" class="invalid-feedback animated fadeInDown" style="display: none;"></div>
+                            </div>
+                            
                         </div>
                         
                        
@@ -139,6 +168,9 @@
         $('#company_name-error').html("");
         $('#company_logo-error').html("");
         $('#company_favicon-error').html("");
+        $('#number_of_users-error').html("");
+        $('#number_of_messages-error').html("");
+        $('#message_duration_time-error').html("");
         
         var default_image = "{{ url('images/placeholder_image.png') }}";
         $('#company_logo_image_show').attr('src', default_image);
@@ -150,6 +182,9 @@
             $('#prefix_invoice_no').val(data.prefix_invoice_no);
             $('#invoice_no').val(data.invoice_no);
             $('#company_name').val(data.company_name);
+            $('#number_of_users').val(data.number_of_users);
+            $('#number_of_messages').val(data.number_of_messages);
+            $('#message_duration_time').val(data.message_duration_time);
             
             if(data.company_logo==null){
                 var default_image = "{{ url('images/placeholder_image.png') }}";
@@ -210,6 +245,24 @@
                         $('#company_logo-error').hide();
                     }
 
+                    if (res.errors.number_of_users) {
+                        $('#number_of_users-error').show().text(res.errors.number_of_users);
+                    } else {
+                        $('#number_of_users-error').hide();
+                    }
+
+                    if (res.errors.number_of_messages) {
+                        $('#number_of_messages-error').show().text(res.errors.number_of_messages);
+                    } else {
+                        $('#number_of_messages-error').hide();
+                    }
+
+                    if (res.errors.message_duration_time) {
+                        $('#message_duration_time-error').show().text(res.errors.message_duration_time);
+                    } else {
+                        $('#message_duration_time-error').hide();
+                    }
+
                     
                 }
 
@@ -219,6 +272,9 @@
                     $('#saveInvoiceBtn').find('.loadericonfa').hide();
 
                     $("#company_name_val").html(res.Settings.company_name);
+                    $("#number_of_users_val").html(res.Settings.number_of_users);
+                    $("#number_of_messages_val").html(res.Settings.number_of_messages);
+                    $("#message_duration_time_val").html(res.Settings.message_duration_time+" Sec ");
                     var logo = "{{ url('images/company') }}" + "/" + res.Settings.company_logo;
                     if(res.Settings.company_logo!="" && res.Settings.company_logo!=null) {
                         $('#company_logo_val').attr('src', logo);

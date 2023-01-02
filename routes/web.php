@@ -60,6 +60,13 @@ Route::group(['prefix'=>'admin','middleware'=>['auth','userpermission'],'as'=>'a
         Route::get('pricerange/{id}/edit',[\App\Http\Controllers\admin\PriceRangeController::class,'editpricerange'])->name('pricerange.edit');
         Route::get('pricerange/{id}/delete',[\App\Http\Controllers\admin\PriceRangeController::class,'deletepricerange'])->name('pricerange.delete');
 
+        Route::get('messages',[\App\Http\Controllers\admin\MessageController::class,'index'])->name('messages.list');
+        Route::post('addorupdatemessage',[\App\Http\Controllers\admin\MessageController::class,'addorupdatemessage'])->name('messages.addorupdate');
+        Route::post('allmessagelist',[\App\Http\Controllers\admin\MessageController::class,'allmessagelist'])->name('allmessagelist');
+        Route::get('messages/{id}/edit',[\App\Http\Controllers\admin\MessageController::class,'editmessage'])->name('messages.edit');
+        Route::get('messages/{id}/delete',[\App\Http\Controllers\admin\MessageController::class,'deletemessage'])->name('messages.delete');
+        Route::get('chagemessagestatus/{id}',[\App\Http\Controllers\admin\MessageController::class,'chagemessagestatus'])->name('messages.chagemessagestatus');
+
 });
 
 Route::group(['middleware'=>['auth']],function (){
