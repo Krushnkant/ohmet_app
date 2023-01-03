@@ -25,7 +25,7 @@ class AuthController extends BaseController
             return $this->sendError($validator->errors(), "Validation Errors", []);
         }
         $email = $request->email;
-        $user = User::where('email',$email)->where('user_id',$request->user_id)->where('role',3)->first();
+        $user = User::where('email',$email)->where('id',$request->user_id)->where('role',3)->first();
         if($user){
             if($user->estatus != 1){
                 return $this->sendError("Your account is de-activated by admin.", "Account De-active", []);
