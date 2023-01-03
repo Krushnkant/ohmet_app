@@ -76,7 +76,7 @@ function sendPushNotificationcustomers($id,$data)
         if (count($tokens_android) == 0 && count($tokens_ios) == 0) {
             return false;
         }
-        
+     
         if (isset($tokens_ios) && !empty($tokens_ios)){
             $ios_fields = array(
                 'registration_ids' => $tokens_ios,
@@ -106,6 +106,7 @@ function sendPushNotificationcustomers($id,$data)
             );
             sendNotification($android_fields,"android");
         }
+
         return true;
     
 }
