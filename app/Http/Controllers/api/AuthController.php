@@ -93,17 +93,10 @@ class AuthController extends BaseController
     }
 
   
-    public function user_login_log(Request $request){
+    public function user_login_log($id){
 
-        $validator = Validator::make($request->all(), [
-            'user_id' => 'required'
-        ]);
-
-        if($validator->fails()){
-            return $this->sendError($validator->errors(), "Validation Errors", []);
-        }
-
-        $user = User::where('id',$request->user_id)->where('estatus',1)->first();
+    
+        $user = User::where('id',$id)->where('estatus',1)->first();
         if ($user)
         {
             $user->last_login_date = new \DateTime(null, new \DateTimeZone('Asia/Kolkata'));
