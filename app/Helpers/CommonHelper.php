@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\ProjectPage;
 use App\Models\UserPermission;
+use App\Models\User;
 
 
 function getLeftMenuPages(){
@@ -70,9 +71,10 @@ function send_sms($mobile_no, $otp){
 
 function sendPushNotificationcustomers($id,$data)
 {
-   
-        $tokens_android = \App\Models\CustomerDeviceToken::where('user_id',$id)->where('device_type','android')->pluck('token')->all();
-        $tokens_ios = \App\Models\CustomerDeviceToken::where('user_id',$id)->where('device_type','ios')->pluck('token')->all();
+        
+        $user = User::where('id',$id)->first();
+        $tokens_android = \App\Models\CustomerDeviceToken::where('device_id',$user->device_id)->where('device_type','android')->pluck('token')->all();
+        $tokens_ios = \App\Models\CustomerDeviceToken::where('device_id',$user->device_id)->where('device_type','ios')->pluck('token')->all();
         if (count($tokens_android) == 0 && count($tokens_ios) == 0) {
             return false;
         }
