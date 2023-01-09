@@ -9,7 +9,7 @@
         "guzzlehttp/guzzle": "^7.2",
         "jenssegers/agent": "^2.6",
         "laravel/framework": "^9.19",
-        "laravel/passport": "^11.3",
+        "laravel/passport": "^11.4",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "stevebauman/location": "^6.5"

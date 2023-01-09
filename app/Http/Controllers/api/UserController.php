@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Language;
 use App\Models\PriceRange;
+use App\Models\Subscription;
 
 class UserController extends BaseController
 {
@@ -60,6 +61,16 @@ class UserController extends BaseController
         $data['users'] = $users_arr;
         $data['languages'] = $languages;
         $data['pricerange'] = $pricerange;
+        return $this->sendResponseWithData($data,"Users Retrieved Successfully.");
+    }
+
+    public function getPrice(Request $request){
+       
+        $subscription = Subscription::where('estatus',1)->get(['id','price','title','key']);
+        $pricerange = PriceRange::where('estatus',1)->get(['id','price','coin','key']);
+
+        $data['subscriptionPrice'] = $subscription;
+        $data['coinprice'] = $pricerange;
         return $this->sendResponseWithData($data,"Users Retrieved Successfully.");
     }
 

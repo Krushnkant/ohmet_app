@@ -5,7 +5,7 @@
         <div class="col p-md-0">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('admin/dashboard') }}">Home</a></li>
-                <li class="breadcrumb-item active"><a href="javascript:void(0)">Price Range</a></li>
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">Subscription Price</a></li>
             </ol>
         </div>
     </div>
@@ -22,7 +22,7 @@
                             <div class="col-lg-8 col-md-8 col-sm-12">
                                 <?php $page_id = \App\Models\ProjectPage::where('route_url',\Illuminate\Support\Facades\Route::currentRouteName())->pluck('id')->first(); ?>
                                 @if(getUSerRole()==1 || (getUSerRole()!=1 && is_write($page_id)) )
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#PriceRangeModel" id="AddPriceRangeBtn"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#subscriptionModel" id="AddsubscriptionBtn"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                 @endif
                                 
                             </div>
@@ -30,12 +30,12 @@
                         </div>
 
                         <div class="tab-pane fade show active table-responsive" id="all_user_tab">
-                            <table id="all_pricerange" class="table zero-configuration customNewtable" style="width:100%">
+                            <table id="all_subscription" class="table zero-configuration customNewtable" style="width:100%">
                                 <thead>
                                 <tr>
                                     <th>No</th>
                                     <th>Price</th>
-                                    <th>Coin</th>
+                                    <th>Title</th>
                                     <th>Status</th>
                                     <th>Date</th>
                                     <th>Other</th>
@@ -44,8 +44,8 @@
                                 <tfoot>
                                 <tr>
                                     <th>No</th>
-                                    <th>Price</th>
-                                    <th>Coin</th>
+                                    <th>Title</th>
+                                    <th>title</th>
                                     <th>Status</th>
                                     <th>Date</th>
                                     <th>Other</th>
@@ -60,12 +60,12 @@
         </div>
     </div>
 
-    <div class="modal fade" id="PriceRangeModel">
+    <div class="modal fade" id="subscriptionModel">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form class="form-valide" action="" id="pricerangeform" method="post" enctype="multipart/form-data">
+                <form class="form-valide" action="" id="subscriptionform" method="post" enctype="multipart/form-data">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="formtitle">Add Price Range</h5>
+                        <h5 class="modal-title" id="formtitle">Add Subscription Price</h5>
                         <button type="button" class="close" data-dismiss="modal"><span>×</span>
                         </button>
                     </div>
@@ -79,10 +79,10 @@
                             <div id="price-error" class="invalid-feedback animated fadeInDown" style="display: none;"></div>
                         </div>
                         <div class="form-group ">
-                            <label class="col-form-label" for="coin">Coin <span class="text-danger">*</span>
+                            <label class="col-form-label" for="title">Title <span class="text-danger">*</span>
                             </label>
-                            <input type="number" class="form-control input-flat" id="coin" name="coin" min="0" onkeypress="return isNumber(event)"  placeholder="">
-                            <div id="coin-error" class="invalid-feedback animated fadeInDown" style="display: none;"></div>
+                            <input type="text" class="form-control input-flat" id="title" name="title" placeholder="">
+                            <div id="title-error" class="invalid-feedback animated fadeInDown" style="display: none;"></div>
                         </div>
                         <div class="form-group ">
                             <label class="col-form-label" for="key">Key <span class="text-danger">*</span>
@@ -93,27 +93,27 @@
                         
                     </div>
                     <div class="modal-footer">
-                        <input type="hidden" name="pricerange_id" id="pricerange_id">
-                        <button type="button" class="btn btn-outline-primary" id="save_newPriceRangeBtn">Save & New <i class="fa fa-circle-o-notch fa-spin loadericonfa" style="display:none;"></i></button>
-                        <button type="button" class="btn btn-primary" id="save_closePriceRangeBtn">Save & Close <i class="fa fa-circle-o-notch fa-spin loadericonfa" style="display:none;"></i></button>
+                        <input type="hidden" name="subscription_id" id="subscription_id">
+                        <button type="button" class="btn btn-outline-primary" id="save_newsubscriptionBtn">Save & New <i class="fa fa-circle-o-notch fa-spin loadericonfa" style="display:none;"></i></button>
+                        <button type="button" class="btn btn-primary" id="save_closesubscriptionBtn">Save & Close <i class="fa fa-circle-o-notch fa-spin loadericonfa" style="display:none;"></i></button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="DeletePriceRangeModel">
+    <div class="modal fade" id="DeletesubscriptionModel">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Remove Price Range</h5>
+                    <h5 class="modal-title">Remove Subscription Price</h5>
                 </div>
                 <div class="modal-body">
-                    Are you sure you wish to remove this Price Range?
+                    Are you sure you wish to remove this Subscription Price?
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-default" data-dismiss="modal" type="button">Cancel</button>
-                    <button class="btn btn-danger" id="RemovePriceRangeSubmit" type="submit">Remove <i class="fa fa-circle-o-notch fa-spin removeloadericonfa" style="display:none;"></i></button>
+                    <button class="btn btn-danger" id="RemovesubscriptionSubmit" type="submit">Remove <i class="fa fa-circle-o-notch fa-spin removeloadericonfa" style="display:none;"></i></button>
                 </div>
             </div>
         </div>
@@ -124,24 +124,24 @@
 <!-- user list JS start -->
 <script type="text/javascript">
     $(document).ready(function() {
-        pricerange_page_tabs('',true);
+        subscription_page_tabs('',true);
     });
 
     
 
-    function save_pricerange(btn,btn_type){
+    function save_subscription(btn,btn_type){
         $(btn).prop('disabled',true);
         $(btn).find('.loadericonfa').show();
 
         var action  = $(btn).attr('data-action');
 
-        var formData = new FormData($("#pricerangeform")[0]);
+        var formData = new FormData($("#subscriptionform")[0]);
 
         formData.append('action',action);
 
         $.ajax({
             type: 'POST',
-            url: "{{ url('admin/addorupdatepricerange') }}",
+            url: "{{ url('admin/addorupdatesubscription') }}",
             data: formData,
             processData: false,
             contentType: false,
@@ -156,10 +156,10 @@
                         $('#price-error').hide();
                     }
 
-                    if (res.errors.coin) {
-                        $('#coin-error').show().text(res.errors.coin);
+                    if (res.errors.title) {
+                        $('#title-error').show().text(res.errors.title);
                     } else {
-                        $('#coin-error').hide();
+                        $('#title-error').hide();
                     }
 
                     if (res.errors.key) {
@@ -174,49 +174,49 @@
 
                 if(res.status == 200){
                     if(btn_type == 'save_close'){
-                        $("#PriceRangeModel").modal('hide');
+                        $("#subscriptionModel").modal('hide');
                         $(btn).prop('disabled',false);
                         $(btn).find('.loadericonfa').hide();
                         if(res.action == 'add'){
-                            pricerange_page_tabs();
-                            toastr.success("Price Range Added",'Success',{timeOut: 5000});
+                            subscription_page_tabs();
+                            toastr.success("Subscription Price Added",'Success',{timeOut: 5000});
                         }
                         if(res.action == 'update'){
-                            pricerange_page_tabs();
-                            toastr.success("Price Range Updated",'Success',{timeOut: 5000});
+                            subscription_page_tabs();
+                            toastr.success("Subscription Price Updated",'Success',{timeOut: 5000});
                         }
                     }
 
                     if(btn_type == 'save_new'){
                         $(btn).prop('disabled',false);
                         $(btn).find('.loadericonfa').hide();
-                        $("#PriceRangeModel").find('form').trigger('reset');
-                        $("#PriceRangeModel").find("#save_newPriceRangeBtn").removeAttr('data-action');
-                        $("#PriceRangeModel").find("#save_closePriceRangeBtn").removeAttr('data-action');
-                        $("#PriceRangeModel").find("#save_newPriceRangeBtn").removeAttr('data-id');
-                        $("#PriceRangeModel").find("#save_closePriceRangeBtn").removeAttr('data-id');
-                        $('#pricerange_id').val("");
+                        $("#subscriptionModel").find('form').trigger('reset');
+                        $("#subscriptionModel").find("#save_newsubscriptionBtn").removeAttr('data-action');
+                        $("#subscriptionModel").find("#save_closesubscriptionBtn").removeAttr('data-action');
+                        $("#subscriptionModel").find("#save_newsubscriptionBtn").removeAttr('data-id');
+                        $("#subscriptionModel").find("#save_closesubscriptionBtn").removeAttr('data-id');
+                        $('#subscription_id').val("");
                         $('#price-error').html("");
-                        $('#coin-error').html("");
+                        $('#title-error').html("");
                       
                     
-                        $("#coin").focus();
+                        $("#title").focus();
                         if(res.action == 'add'){
-                            pricerange_page_tabs();
-                            toastr.success("Price Range Added",'Success',{timeOut: 5000});
+                            subscription_page_tabs();
+                            toastr.success("Subscription Price Added",'Success',{timeOut: 5000});
                         }
                         if(res.action == 'update'){
-                            pricerange_page_tabs();
-                            toastr.success("Price Range Updated",'Success',{timeOut: 5000});
+                            subscription_page_tabs();
+                            toastr.success("Subscription Price Updated",'Success',{timeOut: 5000});
                         }
                     }
                 }
 
                 if(res.status == 400){
-                    $("#PriceRangeModel").modal('hide');
+                    $("#subscriptionModel").modal('hide');
                     $(btn).prop('disabled',false);
                     $(btn).find('.loadericonfa').hide();
-                    pricerange_page_tabs();
+                    subscription_page_tabs();
                     if(res.message == ""){
                       toastr.error("Please try again",'Error',{timeOut: 5000});
                     }else{
@@ -225,51 +225,51 @@
                 }
             },
             error: function (data) {
-                $("#PriceRangeModel").modal('hide');
+                $("#subscriptionModel").modal('hide');
                 $(btn).prop('disabled',false);
                 $(btn).find('.loadericonfa').hide();
-                pricerange_page_tabs();
+                subscription_page_tabs();
                 toastr.error("Please try again",'Error',{timeOut: 5000});
             }
         });
     }
 
-    $('body').on('click', '#save_newPriceRangeBtn', function () {
-        save_pricerange($(this),'save_new');
+    $('body').on('click', '#save_newsubscriptionBtn', function () {
+        save_subscription($(this),'save_new');
     });
 
-    $('body').on('click', '#save_closePriceRangeBtn', function () {
-        save_pricerange($(this),'save_close');
+    $('body').on('click', '#save_closesubscriptionBtn', function () {
+        save_subscription($(this),'save_close');
     });
 
-    $('#PriceRangeModel').on('shown.bs.modal', function (e) {
+    $('#subscriptionModel').on('shown.bs.modal', function (e) {
         $("#price").focus();
     });
 
    
 
-    $('#PriceRangeModel').on('hidden.bs.modal', function () {
+    $('#subscriptionModel').on('hidden.bs.modal', function () {
         $(this).find('form').trigger('reset');
-        $(this).find("#save_newPriceRangeBtn").removeAttr('data-action');
-        $(this).find("#save_closePriceRangeBtn").removeAttr('data-action');
-        $(this).find("#save_newPriceRangeBtn").removeAttr('data-id');
-        $(this).find("#save_closePriceRangeBtn").removeAttr('data-id');
-        $('#pricerange_id').val("");
+        $(this).find("#save_newsubscriptionBtn").removeAttr('data-action');
+        $(this).find("#save_closesubscriptionBtn").removeAttr('data-action');
+        $(this).find("#save_newsubscriptionBtn").removeAttr('data-id');
+        $(this).find("#save_closesubscriptionBtn").removeAttr('data-id');
+        $('#subscription_id').val("");
         $('#price-error').html("");
-        $('#coin-error').html("");
+        $('#title-error').html("");
         
     });
 
-    $('#DeletePriceRangeModel').on('hidden.bs.modal', function () {
-        $(this).find("#RemovePriceRangeSubmit").removeAttr('data-id');
+    $('#DeletesubscriptionModel').on('hidden.bs.modal', function () {
+        $(this).find("#RemovesubscriptionSubmit").removeAttr('data-id');
     });
 
-    function pricerange_page_tabs(tab_type='',is_clearState=false) {
+    function subscription_page_tabs(tab_type='',is_clearState=false) {
         if(is_clearState){
-            $('#all_pricerange').DataTable().state.clear();
+            $('#all_subscription').DataTable().state.clear();
         }
 
-        $('#all_pricerange').DataTable({
+        $('#all_subscription').DataTable({
             "destroy": true,
             "processing": true,
             "serverSide": true,
@@ -282,7 +282,7 @@
                 }
             },
             "ajax":{
-                "url": "{{ url('admin/allpricerangeslist') }}",
+                "url": "{{ url('admin/allsubscriptionslist') }}",
                 "dataType": "json",
                 "type": "POST",
                 "data":{ _token: '{{ csrf_token() }}' ,tab_type: tab_type},
@@ -303,7 +303,7 @@
                     }
                 },
                 {data: 'price', name: 'price', class: "text-center multirow", orderable: false},
-                {data: 'coin', name: 'coin', class: "text-left multirow", orderable: false},
+                {data: 'title', name: 'title', class: "text-left multirow", orderable: false},
                 {data: 'estatus', name: 'estatus', orderable: false, searchable: false, class: "text-center"},
                 {data: 'created_at', name: 'created_at', searchable: false, class: "text-left"},
                 {data: 'action', name: 'action', orderable: false, searchable: false, class: "text-center"},
@@ -312,24 +312,24 @@
     }
 
 
-    function changePricerangeStatus(pricerange_id) {
+    function changesubscriptionStatus(subscription_id) {
         //var tab_type = get_users_page_tabType();
        
         $.ajax({
             type: 'GET',
-            url: "{{ url('admin/changepricerangestatus') }}" +'/' + pricerange_id,
+            url: "{{ url('admin/changesubscriptionstatus') }}" +'/' + subscription_id,
             success: function (res) {
                 if(res.status == 200 && res.action=='deactive'){
-                    $("#PriceRangestatuscheck_"+pricerange_id).val(2);
-                    $("#PriceRangestatuscheck_"+pricerange_id).prop('checked',false);
-                    pricerange_page_tabs();
-                    toastr.success("Price Range Deactivated",'Success',{timeOut: 5000});
+                    $("#subscriptionstatuscheck_"+subscription_id).val(2);
+                    $("#subscriptionstatuscheck_"+subscription_id).prop('checked',false);
+                    subscription_page_tabs();
+                    toastr.success("Subscription Price Deactivated",'Success',{timeOut: 5000});
                 }
                 if(res.status == 200 && res.action=='active'){
-                    $("#PriceRangestatuscheck_"+pricerange_id).val(1);
-                    $("#PriceRangestatuscheck_"+pricerange_id).prop('checked',true);
-                    pricerange_page_tabs();
-                    toastr.success("Price Range activated",'Success',{timeOut: 5000});
+                    $("#subscriptionstatuscheck_"+subscription_id).val(1);
+                    $("#subscriptionstatuscheck_"+subscription_id).prop('checked',true);
+                    subscription_page_tabs();
+                    toastr.success("Subscription Price activated",'Success',{timeOut: 5000});
                 }
             },
             error: function (data) {
@@ -338,64 +338,64 @@
         });
     }
 
-    $('body').on('click', '#AddPriceRangeBtn', function (e) {
-        $("#PriceRangeModel").find('.modal-title').html("Add Price Range");
+    $('body').on('click', '#AddsubscriptionBtn', function (e) {
+        $("#subscriptionModel").find('.modal-title').html("Add Subscription Price");
     });
 
-    $('body').on('click', '#editPriceRangeBtn', function () {
-        var pricerange_id = $(this).attr('data-id');
-        $.get("{{ url('admin/pricerange') }}" +'/' + pricerange_id +'/edit', function (data) {
-            $('#PriceRangeModel').find('.modal-title').html("Edit Price Range");
-            $('#PriceRangeModel').find('#save_closePriceRangeBtn').attr("data-action","update");
-            $('#PriceRangeModel').find('#save_newPriceRangeBtn').attr("data-action","update");
-            $('#PriceRangeModel').find('#save_closePriceRangeBtn').attr("data-id",pricerange_id);
-            $('#PriceRangeModel').find('#save_newPriceRangeBtn').attr("data-id",pricerange_id);
-            $('#pricerange_id').val(data.id);
+    $('body').on('click', '#editsubscriptionBtn', function () {
+        var subscription_id = $(this).attr('data-id');
+        $.get("{{ url('admin/subscription') }}" +'/' + subscription_id +'/edit', function (data) {
+            $('#subscriptionModel').find('.modal-title').html("Edit Subscription Price");
+            $('#subscriptionModel').find('#save_closesubscriptionBtn').attr("data-action","update");
+            $('#subscriptionModel').find('#save_newsubscriptionBtn').attr("data-action","update");
+            $('#subscriptionModel').find('#save_closesubscriptionBtn').attr("data-id",subscription_id);
+            $('#subscriptionModel').find('#save_newsubscriptionBtn').attr("data-id",subscription_id);
+            $('#subscription_id').val(data.id);
             
             $('#price').val(data.price);
-            $('#coin').val(data.coin);
+            $('#title').val(data.title);
             $('#key').val(data.key);
             
         })
     });
 
-    $('body').on('click', '#deletePriceRangeBtn', function (e) {
-        var delete_pricerange_id = $(this).attr('data-id');
-        $("#DeletePriceRangeModel").find('#RemovePriceRangeSubmit').attr('data-id',delete_pricerange_id);
+    $('body').on('click', '#deletesubscriptionBtn', function (e) {
+        var delete_subscription_id = $(this).attr('data-id');
+        $("#DeletesubscriptionModel").find('#RemovesubscriptionSubmit').attr('data-id',delete_subscription_id);
     });
 
-    $('body').on('click', '#RemovePriceRangeSubmit', function (e) {
-        $('#RemovePriceRangeSubmit').prop('disabled',true);
+    $('body').on('click', '#RemovesubscriptionSubmit', function (e) {
+        $('#RemovesubscriptionSubmit').prop('disabled',true);
         $(this).find('.removeloadericonfa').show();
         e.preventDefault();
-        var remove_pricerange_id = $(this).attr('data-id');
+        var remove_subscription_id = $(this).attr('data-id');
         //var tab_type = get_users_page_tabType();
 
         $.ajax({
             type: 'GET',
-            url: "{{ url('admin/pricerange') }}" +'/' + remove_pricerange_id +'/delete',
+            url: "{{ url('admin/subscription') }}" +'/' + remove_subscription_id +'/delete',
             success: function (res) {
                 if(res.status == 200){
-                    $("#DeletePriceRangeModel").modal('hide');
-                    $('#RemovePriceRangeSubmit').prop('disabled',false);
-                    $("#RemovePriceRangeSubmit").find('.removeloadericonfa').hide();
-                    pricerange_page_tabs();
-                    toastr.success("Price Range Deleted",'Success',{timeOut: 5000});
+                    $("#DeletesubscriptionModel").modal('hide');
+                    $('#RemovesubscriptionSubmit').prop('disabled',false);
+                    $("#RemovesubscriptionSubmit").find('.removeloadericonfa').hide();
+                    subscription_page_tabs();
+                    toastr.success("Subscription Price Deleted",'Success',{timeOut: 5000});
                 }
 
                 if(res.status == 400){
-                    $("#DeletePriceRangeModel").modal('hide');
-                    $('#RemovePriceRangeSubmit').prop('disabled',false);
-                    $("#RemovePriceRangeSubmit").find('.removeloadericonfa').hide();
-                    pricerange_page_tabs();
+                    $("#DeletesubscriptionModel").modal('hide');
+                    $('#RemovesubscriptionSubmit').prop('disabled',false);
+                    $("#RemovesubscriptionSubmit").find('.removeloadericonfa').hide();
+                    subscription_page_tabs();
                     toastr.error("Please try again",'Error',{timeOut: 5000});
                 }
             },
             error: function (data) {
-                $("#DeletePriceRangeModel").modal('hide');
-                $('#RemovePriceRangeSubmit').prop('disabled',false);
-                $("#RemovePriceRangeSubmit").find('.removeloadericonfa').hide();
-                pricerange_page_tabs();
+                $("#DeletesubscriptionModel").modal('hide');
+                $('#RemovesubscriptionSubmit').prop('disabled',false);
+                $("#RemovesubscriptionSubmit").find('.removeloadericonfa').hide();
+                subscription_page_tabs();
                 toastr.error("Please try again",'Error',{timeOut: 5000});
             }
         });

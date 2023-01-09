@@ -42,7 +42,6 @@ class AuthController extends BaseController
 
             return $this->sendResponseWithData($final_data, 'User login successfully.');
         }else{
-        
             $user = User::find($request->user_id);
             $user->email = $email;
             $user->gmail_key = $request->gmail_key;
@@ -66,8 +65,9 @@ class AuthController extends BaseController
         if($validator->fails()){
             return $this->sendError($validator->errors(), "Validation Errors", []);
         }
-
+        
         $user = User::where('device_id',$request->device_id)->where('estatus',1)->where('role',3)->first();
+        
         if (!$user){
             $user = New User();
             $user->device_id = $request->device_id;

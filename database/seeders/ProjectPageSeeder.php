@@ -73,16 +73,27 @@ class ProjectPageSeeder extends Seeder
         ProjectPage::create([
             'id' => 6,
             'parent_menu' => 0,
-            'label' => 'Price',
+            'label' => 'Coin Price',
             'route_url' => 'admin.pricerange.list',
             'is_display_in_menu' => 0,
-            'inner_routes' => 'admin.pricerange.list,admin.pricerange.addorupdate,admin.allpricerangeslist,admin.pricerange.changepricerangestatus,admin.pricerange.edit,admin.pricerange.delete,admin.pricerange.permission,admin.pricerange.savepermission',
+            'inner_routes' => 'admin.pricerange.list,admin.pricerange.addorupdate,admin.allpricerangeslist,admin.pricerange.changepricerangestatus,admin.pricerange.edit,admin.pricerange.delete',
             'icon_class' => 'fa fa-money',
             'sr_no' => 4
         ]);
 
         ProjectPage::create([
             'id' => 7,
+            'parent_menu' => 0,
+            'label' => 'Subscription Price',
+            'route_url' => 'admin.subscription.list',
+            'is_display_in_menu' => 0,
+            'inner_routes' => 'admin.subscription.list,admin.subscription.addorupdate,admin.allsubscriptionslist,admin.subscription.changesubscriptionstatus,admin.subscription.edit,admin.subscription.delete',
+            'icon_class' => 'fa fa-money',
+            'sr_no' => 4
+        ]);
+
+        ProjectPage::create([
+            'id' => 8,
             'parent_menu' => 0,
             'label' => 'Message',
             'icon_class' => 'fa fa-file-text',
@@ -93,7 +104,7 @@ class ProjectPageSeeder extends Seeder
         ]);
 
         ProjectPage::create([
-            'id' => 8,
+            'id' => 9,
             'parent_menu' => 0,
             'label' => 'Settings',
             'route_url' => 'admin.settings.list',
