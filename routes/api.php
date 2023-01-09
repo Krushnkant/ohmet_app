@@ -23,6 +23,7 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('verify_otp', [AuthController::class, 'verify_otp']);
 Route::post('user_login_log', [AuthController::class, 'user_login_log']);
 Route::post('getUsers',[UserController::class,'getUsers']);
+Route::get('getPrice',[UserController::class,'getPrice']);
 Route::post('update_token',[AuthController::class,'update_token']);
 
 Route::get('SendCallNotification',[ChatController::class,'SendCallNotification']);
