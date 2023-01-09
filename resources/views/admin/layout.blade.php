@@ -64,8 +64,8 @@
                 <b class="logo-abbr"><img src="{{ asset('images/logo.png') }}" alt=""> </b>
                 <span class="logo-compact"><img src="{{ asset('images/logo-compact.png') }}" alt=""></span>
                 <span class="brand-title text-white">
-               
-                   <img src="{{ url('images/logo-text.png') }}" alt="">
+                    {{ isset($setting->company_name)?$setting->company_name:"" }}
+                   {{-- <img src="{{ url('images/logo-text.png') }}" alt=""> --}}
                 </span>
             </a>
         </div>
