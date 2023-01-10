@@ -178,13 +178,12 @@ class ChatController extends BaseController
                 $unreadcount = Chat::where('user_id', $all_chat->user_id)
                     ->where('receiver_id', $all_chat->receiver_id)
                     ->where('deleted_by', null)
-                    ->where('is_deleted', 0)
+                    ->where('is_deleted', '0')
                     ->where('deleted_by', null)
                     ->whereIn('tick', ['0', '1'])
                     ->toSql();
-                 dd($unreadcount);
+           
                     
-
                 $temp = array();
                 $temp['id'] = $all_chat->id;
                 $temp['user_id'] = $all_chat->user_id;
