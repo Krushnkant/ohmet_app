@@ -181,7 +181,7 @@ class ChatController extends BaseController
                     ->where('is_deleted', '0')
                     ->where('deleted_by', null)
                     ->whereIn('tick', ['0', '1'])
-                    ->toSql();
+                    ->count();
            
                     
                 $temp = array();
