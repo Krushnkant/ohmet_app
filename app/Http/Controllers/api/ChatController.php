@@ -147,6 +147,58 @@ class ChatController extends BaseController
                 )
                 ->orderBy('id', 'desc')
                 ->get();
+                
+             foreach($get_all_chat as $all_chat){
+            
+                //foreach($all_chat->user as $user){
+                    $image = "";
+                    if($all_chat->user != ""){
+                       $image_array = explode(",",$all_chat->user);
+                       $image = $image_array[0]; 
+                    }
+                    $temp_user = array();
+                    $temp_user['id'] = $all_chat->user->id;
+                    $temp_user['device_id'] = $all_chat->user->device_id;
+                    $temp_user['first_name'] = $all_chat->user->first_name;
+                    $temp_user['last_name'] = $all_chat->user->last_name;
+                    $temp_user['email'] = $all_chat->user->email;
+                    $temp_user['mobile_no'] = $all_chat->user->mobile_no;
+                    $temp_user['age'] = $all_chat->user->age;
+                    $temp_user['gender'] = $all_chat->user->gender;
+                    $temp_user['bio'] = $all_chat->user->bio;
+                    $temp_user['location'] = $all_chat->user->location;
+                    $temp_user['images'] = $image;
+                    $temp_user['video'] = $all_chat->user->video;
+                    $temp_user['shot_video'] = $all_chat->user->shot_video;
+                    $temp_user['rate_per_minite'] = $all_chat->user->rate_per_minite;
+                    $temp_user['created_at'] = $all_chat->user->created_at;
+                    $temp_user['updated_at'] = $all_chat->user->updated_at;
+                //}
+
+                $unreadcount = Chat::where('user_id', $all_chat->user_id)
+                    ->where('receiver_id', $all_chat->receiver_id)
+                    ->where('deleted_by', null)
+                    ->where('is_deleted', 0)
+                    ->where('deleted_by', null)
+                    ->whereIn('tick', ['0', '1'])
+                    ->count();
+
+                $temp = array();
+                $temp['id'] = $all_chat->id;
+                $temp['user_id'] = $all_chat->user_id;
+                $temp['receiver_id'] = $all_chat->receiver_id;
+                $temp['type'] = $all_chat->type;
+                $temp['is_deleted'] = $all_chat->is_deleted;
+                $temp['tick'] = $all_chat->tick;
+                $temp['unreadcount'] = $unreadcount;
+                $temp['created_at'] = $all_chat->created_at;
+                $temp['updated_at'] = $all_chat->updated_at;
+                $temp['receiver'] = $all_chat->receiver;
+                $temp['receiver'] = $all_chat->receiver;
+                $temp['user'] = $temp_user;
+            
+                array_push($postcommants_arr,$temp);
+             }    
 
             return $this->sendResponseWithData($get_all_chat, "get all chat successfully");
         // } else {

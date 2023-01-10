@@ -218,6 +218,7 @@ class EndUserController extends Controller
             'mobile_no.required' =>'Please provide a Mobile No.',
             'age.required' =>'Please provide a Age.',
             'email.required' =>'Please provide a valid E-mail address.',
+            'location.required' =>'Please provide a valid location.',
             'rate_per_minite.required' =>'Please provide a rate per minite.',
         ];
 
@@ -229,6 +230,7 @@ class EndUserController extends Controller
             'last_name' => 'required',
             'age' => 'required',
             'rate_per_minite' => 'required',
+            'location' => 'required',
             'email' => ['required', 'string', 'email', 'max:191',Rule::unique('users')->where(function ($query) use ($request) {
                 return $query->whereIn('role', ['3','4'])->where('id','!=',$request->user_id)->where('estatus','!=',3);
             })],
@@ -244,6 +246,7 @@ class EndUserController extends Controller
             'last_name' => 'required',
             'age' => 'required',
             'rate_per_minite' => 'required',
+            'location' => 'required',
             'email' => ['required', 'string', 'email', 'max:191',Rule::unique('users')->where(function ($query) use ($request) {
                 return $query->whereIn('role', ['3','4'])->where('estatus','!=',3);
             })],

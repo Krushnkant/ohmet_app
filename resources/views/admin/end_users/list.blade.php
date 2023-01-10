@@ -193,6 +193,12 @@ function save_user(btn,btn_type){
                 } else {
                     $('#location-error').hide();
                 }
+
+                if (res.errors.rate_per_minite) {
+                    $('#rate_per_minite-error').show().text(res.errors.rate_per_minite);
+                } else {
+                    $('#rate_per_minite-error').hide();
+                }
             }
 
             if(res.status == 200){
