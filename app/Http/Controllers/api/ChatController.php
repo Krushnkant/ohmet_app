@@ -147,7 +147,7 @@ class ChatController extends BaseController
                 )
                 ->orderBy('id', 'desc')
                 ->get();
-                
+            $chat_arr = array();  
              foreach($get_all_chat as $all_chat){
             
                 //foreach($all_chat->user as $user){
@@ -197,7 +197,7 @@ class ChatController extends BaseController
                 $temp['receiver'] = $all_chat->receiver;
                 $temp['user'] = $temp_user;
             
-                array_push($postcommants_arr,$temp);
+                array_push($chat_arr,$temp);
              }    
 
             return $this->sendResponseWithData($get_all_chat, "get all chat successfully");
