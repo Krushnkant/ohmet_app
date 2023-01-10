@@ -66,12 +66,12 @@ class UserController extends BaseController
 
     public function getPrice(Request $request){
        
-        $subscription = Subscription::where('estatus',1)->orderBy('price', 'ASC')->get(['id','price','title','key']);
-        $pricerange = PriceRange::where('estatus',1)->orderBy('price', 'ASC')->get(['id','price','coin','key']);
+        $subscription = Subscription::where('estatus',1)->orderByRaw('CONVERT(price, SIGNED) desc')->get(['id','price','title','key']);
+        $pricerange = PriceRange::where('estatus',1)->orderByRaw('CONVERT(price, SIGNED) desc')->get(['id','price','coin','key']);
 
         $data['subscriptionPrice'] = $subscription;
         $data['coinprice'] = $pricerange;
-        return $this->sendResponseWithData($data,"Users Retrieved Successfully.");
+        return $this->sendResponseWithData($data,"Price Retrieved Successfully.");
     }
 
     
