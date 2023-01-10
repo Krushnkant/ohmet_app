@@ -200,7 +200,7 @@ class ChatController extends BaseController
                 array_push($chat_arr,$temp);
              }    
 
-            return $this->sendResponseWithData($get_all_chat, "get all chat successfully");
+            return $this->sendResponseWithData($chat_arr, "get all chat successfully");
         // } else {
         //     return $this->sendError("User Not Found", "User Not Found", []);
         // }
