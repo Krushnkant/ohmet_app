@@ -87,7 +87,6 @@ class UserController extends BaseController
         }
         
         $user = User::where('id',$request->user_id)->where('estatus',1)->where('role',3)->first();
-        $user_array = array();
         if ($user){
             $subscription = Subscription::where('id',$request->subscription_id)->first();
             $enddate = date("Y-m-d", strtotime("+ ".$subscription->days." day"));
