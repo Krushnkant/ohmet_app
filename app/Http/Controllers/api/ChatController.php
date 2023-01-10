@@ -167,9 +167,9 @@ class ChatController extends BaseController
                     $temp_user['gender'] = $all_chat->user->gender;
                     $temp_user['bio'] = $all_chat->user->bio;
                     $temp_user['location'] = $all_chat->user->location;
-                    $temp_user['images'] = $image;
-                    $temp_user['video'] = $all_chat->user->video;
-                    $temp_user['shot_video'] = $all_chat->user->shot_video;
+                    $temp_user['images'] = url($image);
+                    $temp_user['video'] = url($all_chat->user->video);
+                    $temp_user['shot_video'] = url($all_chat->user->shot_video);
                     $temp_user['rate_per_minite'] = $all_chat->user->rate_per_minite;
                     $temp_user['created_at'] = $all_chat->user->created_at;
                     $temp_user['updated_at'] = $all_chat->user->updated_at;
@@ -181,7 +181,9 @@ class ChatController extends BaseController
                     ->where('is_deleted', 0)
                     ->where('deleted_by', null)
                     ->whereIn('tick', ['0', '1'])
-                    ->count();
+                    ->toSql();
+                 dd($unreadcount);
+                    
 
                 $temp = array();
                 $temp['id'] = $all_chat->id;
