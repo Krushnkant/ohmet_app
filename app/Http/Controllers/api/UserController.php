@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Language;
 use App\Models\PriceRange;
 use App\Models\Subscription;
+use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class UserController extends BaseController
 {
@@ -66,7 +68,7 @@ class UserController extends BaseController
 
     public function getPrice(Request $request){
        
-        $subscription = Subscription::where('estatus',1)->orderByRaw('CONVERT(price, SIGNED) asc')->get(['id','price','title','key']);
+        $subscription = Subscription::where('estatus',1)->orderByRaw('CONVERT(price, SIGNED) asc')->get(['id','price','title','key','days']);
         $pricerange = PriceRange::where('estatus',1)->orderByRaw('CONVERT(price, SIGNED) asc')->get(['id','price','coin','key']);
 
         $data['subscriptionPrice'] = $subscription;
@@ -74,7 +76,28 @@ class UserController extends BaseController
         return $this->sendResponseWithData($data,"Price Retrieved Successfully.");
     }
 
-    
+    public function update_subscription(Request $request){
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required',
+            'subscription_id' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return $this->sendError($validator->errors(), "Validation Errors", []);
+        }
+        
+        $user = User::where('id',$request->user_id)->where('estatus',1)->where('role',3)->first();
+        
+        if ($user){
+            $subscription = Subscription::where('id',$request->subscription_id)->first();
+            $enddate = date("Y-m-d", strtotime("+ ".$subscription->days." day"));
+            $user->subscription_id = $request->subscription_id;
+            $user->subscription_end_date = $enddate;
+            $user->save();
+            //$data['token'] =  $user->createToken('Ohmet@13579WebV#d@n%p')->accessToken;
+        }
+        return $this->sendResponseWithData($user,"Subscription updated.");
+    }
 
 
 }

@@ -36,6 +36,7 @@
                                     <th>No</th>
                                     <th>Price</th>
                                     <th>Title</th>
+                                    <th>Days</th>
                                     <th>Status</th>
                                     <th>Date</th>
                                     <th>Other</th>
@@ -46,6 +47,7 @@
                                     <th>No</th>
                                     <th>Title</th>
                                     <th>title</th>
+                                    <th>Days</th>
                                     <th>Status</th>
                                     <th>Date</th>
                                     <th>Other</th>
@@ -89,6 +91,12 @@
                             </label>
                             <input type="text" class="form-control input-flat" id="key" name="key" placeholder="">
                             <div id="key-error" class="invalid-feedback animated fadeInDown" style="display: none;"></div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-form-label" for="days"> Days <span class="text-danger">*</span>
+                            </label>
+                            <input type="number" class="form-control input-flat" id="days" name="days" min="0" onkeypress="return isNumber(event)" placeholder="">
+                            <div id="days-error" class="invalid-feedback animated fadeInDown" style="display: none;"></div>
                         </div>
                         
                     </div>
@@ -166,6 +174,12 @@
                         $('#key-error').show().text(res.errors.key);
                     } else {
                         $('#key-error').hide();
+                    }
+
+                    if (res.errors.days) {
+                        $('#days-error').show().text(res.errors.days);
+                    } else {
+                        $('#days-error').hide();
                     }
 
                     
@@ -304,6 +318,7 @@
                 },
                 {data: 'price', name: 'price', class: "text-center multirow", orderable: false},
                 {data: 'title', name: 'title', class: "text-left multirow", orderable: false},
+                {data: 'days', name: 'days', class: "text-left multirow", orderable: true},
                 {data: 'estatus', name: 'estatus', orderable: false, searchable: false, class: "text-center"},
                 {data: 'created_at', name: 'created_at', searchable: false, class: "text-left"},
                 {data: 'action', name: 'action', orderable: false, searchable: false, class: "text-center"},
@@ -355,6 +370,7 @@
             $('#price').val(data.price);
             $('#title').val(data.title);
             $('#key').val(data.key);
+            $('#days').val(data.days);
             
         })
     });

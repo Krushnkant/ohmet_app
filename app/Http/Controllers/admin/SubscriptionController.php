@@ -19,11 +19,13 @@ class SubscriptionController extends Controller
             'price.required' =>'Please provide a Price',
             'title.required' =>'Please provide a title.', 
             'key.required' =>'Please provide a Key.', 
+            'days.required' =>'Please provide a Days.', 
         ];
         $validator = Validator::make($request->all(), [
             'price' => 'required|numeric',
             'title' => 'required',
             'key' => 'required',
+            'days' => 'required|numeric',
         ], $messages);
         
         if ($validator->fails()) {
@@ -39,12 +41,14 @@ class SubscriptionController extends Controller
             $subscription->price = $request->price;
             $subscription->title = $request->title;
             $subscription->key = $request->key;
+            $subscription->days = $request->days;
         }else{
             $action = "add";
             $subscription = new Subscription();
             $subscription->price = $request->price;
             $subscription->title = $request->title;
             $subscription->key = $request->key;
+            $subscription->days = $request->days;
             $subscription->created_at = new \DateTime(null, new \DateTimeZone('Asia/Kolkata'));
         }
     
@@ -59,9 +63,10 @@ class SubscriptionController extends Controller
                 0 =>'id',
                 1 =>'price',
                 2=> 'title',
-                3=> 'estatus',
-                4=> 'created_at',
-                5=> 'action',
+                3=> 'days',
+                4=> 'estatus',
+                5=> 'created_at',
+                6=> 'action',
             );
 
             $totalData = Subscription::count();
@@ -142,6 +147,7 @@ class SubscriptionController extends Controller
 
                     $nestedData['price'] = $price;
                     $nestedData['title'] = $title;
+                    $nestedData['days'] = $subscription->days;
                     $nestedData['estatus'] = $estatus;
                     $nestedData['created_at'] = date('Y-m-d H:i:s', strtotime($subscription->created_at));
                     $nestedData['action'] = $action;
