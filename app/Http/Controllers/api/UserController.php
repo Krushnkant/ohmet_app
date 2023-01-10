@@ -87,15 +87,17 @@ class UserController extends BaseController
         }
         
         $user = User::where('id',$request->user_id)->where('estatus',1)->where('role',3)->first();
-        
+        $user_array = array();
         if ($user){
             $subscription = Subscription::where('id',$request->subscription_id)->first();
             $enddate = date("Y-m-d", strtotime("+ ".$subscription->days." day"));
             $user->subscription_id = $request->subscription_id;
             $user->subscription_end_date = $enddate;
             $user->save();
-            //$data['token'] =  $user->createToken('Ohmet@13579WebV#d@n%p')->accessToken;
+            $user->setAttribute('is_subscription', $user->tokenExpired());
+
         }
+         
         return $this->sendResponseWithData($user,"Subscription updated.");
     }
 

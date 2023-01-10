@@ -57,4 +57,13 @@ class User extends Authenticatable
     public function user_language(){
         return $this->hasMany(UserLanguage::class,'user_id','id');
     }
+
+    public function tokenExpired()
+    {
+        if (Carbon::parse($this->attributes['subscription_end_date']) < Carbon::now()) {
+            return false;
+        }
+        return true;
+    }
+
 }

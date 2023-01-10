@@ -89,6 +89,7 @@ class AuthController extends BaseController
         }
         $device->save();
         $this->user_login_log($user->id);
+        $user->setAttribute('is_subscription', $user->tokenExpired());
         return $this->sendResponseWithData($user,"Device Token updated.");
     }
 
