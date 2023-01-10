@@ -183,7 +183,7 @@ class ChatController extends BaseController
                     ->whereIn('tick', ['0', '1'])
                     ->count();
                 
-                $last_message = Chat::select('message_text','created_at','tick','updated_at')->where('is_deleted', '0')->whereorWhere(function ($query) use ($auth_id) {
+                $last_message = Chat::select('message_text','created_at','tick','updated_at')->where('is_deleted', '0')->orWhere(function ($query) use ($auth_id) {
                     $query->where('receiver_id', $auth_id)
                         ->orWhere('user_id', $auth_id);
                  })->orderBy('id', 'desc')->first();
