@@ -152,8 +152,8 @@ class ChatController extends BaseController
             
                 //foreach($all_chat->user as $user){
                     $image = "";
-                    if($all_chat->user != ""){
-                       $image_array = explode(",",$all_chat->user);
+                    if($all_chat->user->image != ""){
+                       $image_array = explode(",",$all_chat->user->image);
                        $image = $image_array[0]; 
                     }
                     $temp_user = array();
