@@ -132,8 +132,8 @@ function sendNotification($data,$type){
     $result = curl_exec($ch);
     curl_close($ch);
 
-    $data = explode(':', $result);
-    $sucess = explode(",", $data[2]);
+    //$data = explode(':', $result);
+    //$sucess = explode(",", $data[2]);
 
     return true;
 }
