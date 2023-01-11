@@ -140,17 +140,13 @@ class ChatController extends BaseController
                 })
                 ->where('is_deleted', 0)
                 ->where('tick', '0')
-                // ->groupBy(
-                //     DB::raw(
-                //         'if (receiver_id = ' . $auth_id . ', user_id, receiver_id)'
-                //     )
-                // )
+                ->groupBy(
+                    DB::raw(
+                        'if (receiver_id = ' . $auth_id . ', user_id, receiver_id)'
+                    )
+                )
                 ->orderBy('id', 'desc')
-                ->latest()
-                ->get()
-                ->unique(DB::raw(
-                             'if (receiver_id = ' . $auth_id . ', user_id, receiver_id)'
-                         ));
+                ->get();
             $chat_arr = array();  
              foreach($get_all_chat as $all_chat){
             
