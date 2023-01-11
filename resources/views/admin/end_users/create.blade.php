@@ -127,7 +127,7 @@
         <?php } ?>
         <?php } ?>
 
-        <div id="categorythumb-error" class="invalid-feedback animated fadeInDown" style="display: none;"></div>
+        <div id="imagethumb-error" class="invalid-feedback animated fadeInDown" style="display: none;"></div>
     </div>
 
     <div class="form-group">
@@ -136,17 +136,17 @@
         <input type="file" name="video[]" id="userVideoFiles" multiple="multiple">
         <input type="hidden" name="userVideo" id="userVideo" value="{{ isset($user)?$user->video:"" }}">
         
-        <div id="userthumb-error" class="invalid-feedback animated fadeInDown" style="display: none;"></div>
+        <div id="videothumb-error" class="invalid-feedback animated fadeInDown" style="display: none;"></div>
     </div>
 
 
     <div class="form-group">
-        <label class="col-form-label" for="userShotVideo">Shot Video  <span class="text-danger">*</span>
+        <label class="col-form-label" for="userShotVideo">Short Video  <span class="text-danger">*</span>
         </label>
         <input type="file" name="shot_video[]" id="userShotVideoFiles" multiple="multiple">
         <input type="hidden" name="userShotVideo" id="userShotVideo" value="{{ isset($user)?$user->shot_video:"" }}">
         
-        <div id="userthumb-error" class="invalid-feedback animated fadeInDown" style="display: none;"></div>
+        <div id="shortvideothumb-error" class="invalid-feedback animated fadeInDown" style="display: none;"></div>
     </div>
 
     <button type="button" class="btn btn-outline-primary mt-4" id="save_newEndUserBtn" data-action="{{ isset($user)?"update":"add" }}">Save & New <i class="fa fa-circle-o-notch fa-spin loadericonfa" style="display:none;"></i></button>&nbsp;&nbsp;

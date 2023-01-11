@@ -220,6 +220,9 @@ class EndUserController extends Controller
             'email.required' =>'Please provide a valid E-mail address.',
             'location.required' =>'Please provide a valid location.',
             'rate_per_minite.required' =>'Please provide a rate per minite.',
+            'userImg.required' =>'Please provide a  Image',
+            'userVideoFiles.required' =>'Please provide a  Video',
+            'userShotVideo.required' =>'Please provide a  Short Video',
         ];
 
         if(isset($request->action) && $request->action=="update"){
@@ -231,6 +234,9 @@ class EndUserController extends Controller
             'age' => 'required',
             'rate_per_minite' => 'required',
             'location' => 'required',
+            'userImg' => 'required',
+            'userVideoFiles' => 'required',
+            'userShotVideo' => 'required',
             'email' => ['required', 'string', 'email', 'max:191',Rule::unique('users')->where(function ($query) use ($request) {
                 return $query->whereIn('role', ['3','4'])->where('id','!=',$request->user_id)->where('estatus','!=',3);
             })],
@@ -247,6 +253,9 @@ class EndUserController extends Controller
             'age' => 'required',
             'rate_per_minite' => 'required',
             'location' => 'required',
+            'userImg' => 'required',
+            'userVideoFiles' => 'required',
+            'userShotVideo' => 'required',
             'email' => ['required', 'string', 'email', 'max:191',Rule::unique('users')->where(function ($query) use ($request) {
                 return $query->whereIn('role', ['3','4'])->where('estatus','!=',3);
             })],

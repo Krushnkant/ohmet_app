@@ -199,6 +199,24 @@ function save_user(btn,btn_type){
                 } else {
                     $('#rate_per_minite-error').hide();
                 }
+
+                if (res.errors.userImg) {
+                    $('#imagethumb-error').show().text(res.errors.userImg);
+                } else {
+                    $('#imagethumb-error').hide();
+                }
+
+                if (res.errors.userVideoFiles) {
+                    $('#videothumb-error').show().text(res.errors.userVideoFiles);
+                } else {
+                    $('#videothumb-error').hide();
+                }
+
+                if (res.errors.userShotVideo) {
+                    $('#shortvideothumb-error').show().text(res.errors.userShotVideo);
+                } else {
+                    $('#shortvideothumb-error').hide();
+                }
             }
 
             if(res.status == 200){
