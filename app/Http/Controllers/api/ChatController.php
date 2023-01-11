@@ -182,17 +182,24 @@ class ChatController extends BaseController
                     ->where('deleted_by', null)
                     ->whereIn('tick', ['0', '1'])
                     ->count();
+
+                $user_id    = $all_chat->user_id;
+
+                $lastmessage = Chat::Where(function ($query) use ($auth_id) {
+                    $query->where('receiver_id', $auth_id)
+                        ->orWhere('user_id', $auth_id);
+                })->Where(function ($query) use ($user_id) {
+                    $query->where('receiver_id', $user_id)
+                        ->orWhere('user_id', $user_id);
+                })->first();    
                 
-           
-                       
-           
-                    
+    
                 $temp = array();
                 $temp['id'] = $all_chat->id;
                 $temp['user_id'] = $all_chat->user_id;
                 $temp['receiver_id'] = $all_chat->receiver_id;
                 $temp['type'] = $all_chat->type;
-                $temp['message_text'] = $all_chat->message_text;
+                $temp['message_text'] = $lastmessage->message_text;
                 $temp['is_deleted'] = $all_chat->is_deleted;
                 $temp['tick'] = $all_chat->tick;
                 $temp['unreadcount'] = $unreadcount;
