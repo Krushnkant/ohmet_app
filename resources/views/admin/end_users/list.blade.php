@@ -206,8 +206,8 @@ function save_user(btn,btn_type){
                     $('#imagethumb-error').hide();
                 }
 
-                if (res.errors.userVideoFiles) {
-                    $('#videothumb-error').show().text(res.errors.userVideoFiles);
+                if (res.errors.userVideo) {
+                    $('#videothumb-error').show().text(res.errors.userVideo);
                 } else {
                     $('#videothumb-error').hide();
                 }
