@@ -196,16 +196,15 @@ class ChatController extends BaseController
     
                 $temp = array();
                 $temp['id'] = $all_chat->id;
-                $temp['user_id'] = $all_chat->user_id;
-                $temp['receiver_id'] = $all_chat->receiver_id;
-                $temp['type'] = $all_chat->type;
+                $temp['user_id'] = $lastmessage->user_id;
+                $temp['receiver_id'] = $lastmessage->receiver_id;
+                $temp['type'] = $lastmessage->type;
                 $temp['message_text'] = $lastmessage->message_text;
-                $temp['is_deleted'] = $all_chat->is_deleted;
-                $temp['tick'] = $all_chat->tick;
+                $temp['is_deleted'] = $lastmessage->is_deleted;
+                $temp['tick'] = $lastmessage->tick;
                 $temp['unreadcount'] = $unreadcount;
-                $temp['created_at'] = $all_chat->created_at;
-                $temp['updated_at'] = $all_chat->updated_at;
-                $temp['receiver'] = $all_chat->receiver;
+                $temp['created_at'] = $lastmessage->created_at;
+                $temp['updated_at'] = $lastmessage->updated_at;
                 $temp['receiver'] = $all_chat->receiver;
                 $temp['user'] = $temp_user;
             
