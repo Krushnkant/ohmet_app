@@ -191,7 +191,7 @@ class ChatController extends BaseController
                 })->Where(function ($query) use ($user_id) {
                     $query->where('receiver_id', $user_id)
                         ->orWhere('user_id', $user_id);
-                })->first();    
+                })->orderBy('id', 'desc')->first();    
                 
     
                 $temp = array();
