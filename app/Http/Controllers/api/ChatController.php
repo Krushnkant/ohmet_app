@@ -126,7 +126,7 @@ class ChatController extends BaseController
         $auth_id = $id;
 
         // if ($id == $auth_id) {
-            $get_all_chat = Chat::select(DB::raw('*, max(updated_at) as updatedAt'))->with(['receiver' => function ($query) use ($auth_id) {
+            $get_all_chat = Chat::with(['receiver' => function ($query) use ($auth_id) {
                 $query->where('id', '!=', $auth_id);
             }, 'user' => function ($query1) use ($auth_id) {
                 $query1->where('id', '!=', $auth_id);
