@@ -235,14 +235,14 @@ class EndUserController extends Controller
             'rate_per_minite' => 'required',
             'location' => 'required',
             'userImg' => 'required',
-            'userVideoFiles' => 'required',
+            'userVideo' => 'required',
             'userShotVideo' => 'required',
             'email' => ['required', 'string', 'email', 'max:191',Rule::unique('users')->where(function ($query) use ($request) {
                 return $query->whereIn('role', ['3','4'])->where('id','!=',$request->user_id)->where('estatus','!=',3);
             })],
-            'mobile_no' => ['required', 'numeric', 'digits:10',Rule::unique('users')->where(function ($query) use ($request) {
-                return $query->whereIn('role', ['3','4'])->where('id','!=',$request->user_id)->where('estatus','!=',3);
-            })],
+            // 'mobile_no' => ['required', 'numeric', 'digits:10',Rule::unique('users')->where(function ($query) use ($request) {
+            //     return $query->whereIn('role', ['3','4'])->where('id','!=',$request->user_id)->where('estatus','!=',3);
+            // })],
         ], $messages);
        }else{
 
@@ -254,14 +254,14 @@ class EndUserController extends Controller
             'rate_per_minite' => 'required',
             'location' => 'required',
             'userImg' => 'required',
-            'userVideoFiles' => 'required',
+            'userVideo' => 'required',
             'userShotVideo' => 'required',
             'email' => ['required', 'string', 'email', 'max:191',Rule::unique('users')->where(function ($query) use ($request) {
                 return $query->whereIn('role', ['3','4'])->where('estatus','!=',3);
             })],
-            'mobile_no' => ['required', 'numeric', 'digits:10',Rule::unique('users')->where(function ($query) use ($request) {
-                return $query->whereIn('role', ['3','4'])->where('estatus','!=',3);
-            })],
+            // 'mobile_no' => ['required', 'numeric', 'digits:10',Rule::unique('users')->where(function ($query) use ($request) {
+            //     return $query->whereIn('role', ['3','4'])->where('estatus','!=',3);
+            // })],
         ], $messages);
 
        }
@@ -282,7 +282,7 @@ class EndUserController extends Controller
             $user->first_name = $request->first_name;
             $user->last_name = $request->last_name;
             $user->email = $request->email;
-            $user->mobile_no = $request->mobile_no;
+            $user->mobile_no = isset($request->mobile_no)?$request->mobile_no:"";
             $user->gender = $request->gender;
             $user->age = $request->age;
             $user->bio = $request->bio;
