@@ -23,7 +23,7 @@
     </div>
 
     <div class="form-group ">
-        <label class="col-form-label" for="mobile_no">Mobile No <span class="text-danger">*</span>
+        <label class="col-form-label" for="mobile_no">Mobile No 
         </label>
         <input type="text" class="form-control input-flat" id="mobile_no" name="mobile_no" placeholder="" value="{{ isset($user)?$user->mobile_no:"" }}">
         <div id="mobileno-error" class="invalid-feedback animated fadeInDown" style="display: none;"></div>
