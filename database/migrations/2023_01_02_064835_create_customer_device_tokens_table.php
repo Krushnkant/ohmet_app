@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('customer_device_tokens', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->integer('device_id');
+            $table->text('device_id');
             $table->text('token');
             $table->text('device_type');
             $table->integer('estatus')->default(1)->comment('1->Active,2->Deactive,3->Deleted,4->Pending');
