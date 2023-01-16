@@ -29,9 +29,7 @@ class CallNotificationCron extends Command
      */
     public function handle()
     {
-        \Log::info("Cron is working fine!");
-
-
+        
         set_time_limit(0);
         $realusers = User::where('estatus',1)->where('role',3)->get();
         foreach($realusers as $realuser){
@@ -65,7 +63,7 @@ class CallNotificationCron extends Command
            sendPushNotificationcustomers($realuser->id,$notification_array);
         }
 
-
+        \Log::info("Cron is working fine!");
         return Command::SUCCESS;
     }
 }
