@@ -65,7 +65,7 @@ Route::group(['prefix'=>'admin','middleware'=>['auth','userpermission'],'as'=>'a
         Route::post('allsubscriptionslist',[\App\Http\Controllers\admin\SubscriptionController::class,'allsubscriptionslist'])->name('allsubscriptionslist');
         Route::get('changesubscriptionstatus/{id}',[\App\Http\Controllers\admin\SubscriptionController::class,'changesubscriptionstatus'])->name('subscription.changesubscriptionstatus');
         Route::get('subscription/{id}/edit',[\App\Http\Controllers\admin\SubscriptionController::class,'editsubscription'])->name('subscription.edit');
-        Route::get('subscription/{id}/delete',[\App\Http\Controllers\admin\SubscriptionController::class,'deletesubscriptione'])->name('subscription.delete');
+        Route::get('subscription/{id}/delete',[\App\Http\Controllers\admin\SubscriptionController::class,'deletesubscription'])->name('subscription.delete');
 
         Route::get('messages',[\App\Http\Controllers\admin\MessageController::class,'index'])->name('messages.list');
         Route::post('addorupdatemessage',[\App\Http\Controllers\admin\MessageController::class,'addorupdatemessage'])->name('messages.addorupdate');

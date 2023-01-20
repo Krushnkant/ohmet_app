@@ -88,26 +88,35 @@ class AuthController extends BaseController
             $device->device_type = $request->device_type;
         }
         $device->save();
-        $this->user_login_log($user->id);
+        //$this->user_login_log($request,$user->id);
         $user->setAttribute('is_subscription', $user->tokenExpired());
         return $this->sendResponseWithData($user,"Device Token updated.");
     }
 
   
-    public function user_login_log($id){
+    public function user_login_log(Request $request){
 
     
-        $user = User::where('id',$id)->where('estatus',1)->first();
+        $user = User::where('id',$request->user_id)->where('estatus',1)->first();
         if ($user)
         {
+            if($user->latitude == ""){
+                $user->country =  isset($request->country)?$request->country:"";
+                $user->state =  isset($request->state)?$request->state:"";
+                $user->city =  isset($request->city)?$request->city:"";
+                $user->latitude =  isset($request->latitude)?$request->latitude:"";
+                $user->longitude =  isset($request->longitude)?$request->longitude:"";
+            }
             $user->last_login_date = new \DateTime(null, new \DateTimeZone('Asia/Kolkata'));
             $user->save(); 
 
             $userlogin = New UserLogin();
             $userlogin->user_id =  $user->id;
-            $userlogin->country =  isset($request->countryName)?$request->countryName:"";
-            $userlogin->state =  isset($request->regionName)?$request->regionName:"";
-            $userlogin->city =  isset($request->cityName)?$request->cityName:"";
+            $userlogin->country =  isset($request->country)?$request->country:"";
+            $userlogin->state =  isset($request->state)?$request->state:"";
+            $userlogin->city =  isset($request->city)?$request->city:"";
+            $userlogin->latitude =  isset($request->latitude)?$request->latitude:"";
+            $userlogin->longitude =  isset($request->longitude)?$request->longitude:"";
             $userlogin->created_at = new \DateTime(null, new \DateTimeZone('Asia/Kolkata'));
             $userlogin->save();
             return $this->sendResponseSuccess('log create successfully.');
