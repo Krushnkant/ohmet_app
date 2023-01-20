@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Language;
 use App\Models\PriceRange;
 use App\Models\Subscription;
+use App\Models\PurchaseCoin;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 
@@ -87,17 +88,55 @@ class UserController extends BaseController
         }
         
         $user = User::where('id',$request->user_id)->where('estatus',1)->where('role',3)->first();
-        if ($user){
-            $subscription = Subscription::where('id',$request->subscription_id)->first();
-            $enddate = date("Y-m-d", strtotime("+ ".$subscription->days." day"));
-            $user->subscription_id = $request->subscription_id;
-            $user->subscription_end_date = $enddate;
-            $user->save();
-            $user->setAttribute('is_subscription', $user->tokenExpired());
-
+        if (!$user){
+            return $this->sendError("User Not Exist", "Not Found Error", []);
         }
+      
+        $subscription = Subscription::where('id',$request->subscription_id)->first();
+        $enddate = date("Y-m-d", strtotime("+ ".$subscription->days." day"));
+        $user->subscription_id = $request->subscription_id;
+        $user->subscription_end_date = $enddate;
+        $user->save();
+        $user->setAttribute('is_subscription', $user->tokenExpired());
+
+        
          
         return $this->sendResponseWithData($user,"Subscription updated.");
+    }
+
+    public function purchase_coin(Request $request){
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required',
+            'package_id' => 'required',
+            'payment_type' => 'required',
+            'coin' => 'required',
+            'total_amount' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return $this->sendError($validator->errors(), "Validation Errors", []);
+        }
+        
+        $user = User::where('id',$request->user_id)->where('estatus',1)->where('role',3)->first();
+        if (!$user){
+            return $this->sendError("User Not Exist", "Not Found Error", []);
+        }
+
+        $package = PriceRange::where('id',$request->package_id)->where('estatus',1)->first();
+        if (!$package){
+            return $this->sendError("Package Not Exist", "Not Found Error", []);
+        }
+
+        $package = New PurchaseCoin();
+        $package->user_id = $request->user_id;
+        $package->package_id = $request->package_id;
+        $package->total_amount = $request->total_amount;
+        $package->coin = $request->coin;
+        $package->payment_type = $request->payment_type;
+        $package->payment_transaction_id = $request->payment_transaction_id;
+        $package->save();
+
+        return $this->sendResponseWithData($package,"Purchase Package Successfully.");
     }
 
 

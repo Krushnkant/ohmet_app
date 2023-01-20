@@ -27,6 +27,7 @@ Route::get('getPrice',[UserController::class,'getPrice']);
 Route::post('update_token',[AuthController::class,'update_token']);
 
 Route::post('update_subscription',[UserController::class,'update_subscription']);
+Route::post('purchase_coin',[UserController::class,'purchase_coin']);
 
 Route::get('SendCallNotification',[ChatController::class,'SendCallNotification']);
 Route::post('AutoSendMessage',[ChatController::class,'AutoSendMessage']);
