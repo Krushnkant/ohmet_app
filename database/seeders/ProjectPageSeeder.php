@@ -106,12 +106,23 @@ class ProjectPageSeeder extends Seeder
         ProjectPage::create([
             'id' => 9,
             'parent_menu' => 0,
+            'label' => 'Purchase Coins',
+            'icon_class' => 'fa fa-file-text',
+            'route_url' => 'admin.purchasecoin.list',
+            'is_display_in_menu' => 0,
+            'inner_routes' => 'admin.purchasecoin.list,admin.allpurchasecoinslist',
+            'sr_no' => 6
+        ]);
+
+        ProjectPage::create([
+            'id' => 10,
+            'parent_menu' => 0,
             'label' => 'Settings',
             'route_url' => 'admin.settings.list',
             'icon_class' => 'fa fa-cog',
             'is_display_in_menu' => 0,
             'inner_routes' => 'admin.settings.list,admin.settings.edit',
-            'sr_no' => 6
+            'sr_no' => 7
         ]);
 
         

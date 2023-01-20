@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\ProjectPage;
+use App\Models\PurchaseCoin;
 use App\Models\PriceRange;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -189,5 +190,96 @@ class PriceRangeController extends Controller
             return response()->json(['status' => '200']);
         }
         return response()->json(['status' => '400']);
+    }
+
+    public function purchasecoin(){
+        return view('admin.purchasecoin.list');
+    }
+
+    public function allpurchasecoinslist(Request $request){
+        if ($request->ajax()) {
+        
+            $columns = array(
+                0 =>'id',
+                1 =>'amount',
+                2=> 'coin',
+                3=> 'payment_type',
+                4=> 'transaction_id',
+                5=> 'created_at'
+            );
+
+            $totalData = PurchaseCoin::count();
+
+            $totalFiltered = $totalData;
+
+            $limit = $request->input('length');
+            $start = $request->input('start');
+            $order = $columns[$request->input('order.0.column')];
+            $dir = $request->input('order.0.dir');
+
+            if($order == "id"){
+                $order == "created_at";
+                $dir = 'desc';
+            }
+
+            if(empty($request->input('search.value')))
+            {
+                $priceranges = PurchaseCoin::offset($start)
+                    ->limit($limit)
+                    ->orderBy($order,$dir)
+                    ->get();
+            }
+            else {
+                $search = $request->input('search.value');
+                $priceranges =  PurchaseCoin::where(function($query) use($search){
+                      $query->where('id','LIKE',"%{$search}%")
+                            ->orWhere('total_amount', 'LIKE',"%{$search}%")
+                            ->orWhere('coin', 'LIKE',"%{$search}%")
+                            ->orWhere('created_at', 'LIKE',"%{$search}%");
+                      })
+                      ->offset($start)
+                      ->limit($limit)
+                      ->orderBy($order,$dir)
+                      ->get();
+
+                $totalFiltered = PurchaseCoin::where(function($query) use($search){
+                    $query->where('id','LIKE',"%{$search}%")
+                          ->orWhere('total_amount', 'LIKE',"%{$search}%")
+                          ->orWhere('coin', 'LIKE',"%{$search}%")
+                          ->orWhere('created_at', 'LIKE',"%{$search}%");
+                    })
+                    ->count();
+            }
+
+            $data = array();
+
+            if(!empty($priceranges))
+            {
+                foreach ($priceranges as $pricerange)
+                {
+                    $page_id = ProjectPage::where('route_url','admin.purchasecoin.list')->pluck('id')->first();
+
+                    $price = '<span><i class="fa fa-inr" aria-hidden="true"></i> ' .$pricerange->total_amount .'</span>';
+                    $coin = '<span><i class="fa fa-coins" aria-hidden="true"></i> ' .$pricerange->coin .'</span>';
+                    
+                    $nestedData['amount'] = $price;
+                    $nestedData['coin'] = $coin;
+                    $nestedData['payment_type'] = $pricerange->payment_type;
+                    $nestedData['transaction_id'] = $pricerange->payment_transaction_id;
+                    $nestedData['created_at'] = date('Y-m-d H:i:s', strtotime($pricerange->created_at));
+                    $data[] = $nestedData;
+
+                }
+            }
+
+            $json_data = array(
+                "draw"            => intval($request->input('draw')),
+                "recordsTotal"    => intval($totalData),
+                "recordsFiltered" => intval($totalFiltered),
+                "data" => $data,
+            );
+
+            echo json_encode($json_data);
+        }
     }
 }

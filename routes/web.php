@@ -74,6 +74,10 @@ Route::group(['prefix'=>'admin','middleware'=>['auth','userpermission'],'as'=>'a
         Route::get('messages/{id}/delete',[\App\Http\Controllers\admin\MessageController::class,'deletemessage'])->name('messages.delete');
         Route::get('chagemessagestatus/{id}',[\App\Http\Controllers\admin\MessageController::class,'chagemessagestatus'])->name('messages.chagemessagestatus');
 
+        Route::get('purchasecoin',[\App\Http\Controllers\admin\PriceRangeController::class,'purchasecoin'])->name('purchasecoin.list');
+        Route::post('allpurchasecoinslist',[\App\Http\Controllers\admin\PriceRangeController::class,'allpurchasecoinslist'])->name('allpurchasecoinslist');
+     
+
 });
 
 Route::group(['middleware'=>['auth']],function (){
