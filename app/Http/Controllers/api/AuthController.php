@@ -43,8 +43,7 @@ class AuthController extends BaseController
             return $this->sendResponseWithData($final_data, 'User login successfully.');
         }else{
             
-            $user = User::find($request->user_id);
-
+            $user = New User();
             $user->email = $request->email;
             $user->gmail_key = $request->gmail_key;
             $user->save();
