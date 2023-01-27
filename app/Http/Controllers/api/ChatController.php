@@ -315,6 +315,7 @@ class ChatController extends BaseController
                 }
            }
 
+           $notification_array['receiver_id'] = $user->id;
            $notification_array['title'] = $user->first_name .' '.$user->last_name;
            $notification_array['message'] = $chat->message_text;
            $notification_array['rate_per_minite'] = $user->rate_per_minite;
