@@ -317,6 +317,8 @@ class ChatController extends BaseController
 
            $notification_array['title'] = $user->first_name .' '.$user->last_name;
            $notification_array['message'] = $chat->message_text;
+           $notification_array['rate_per_minite'] = $user->rate_per_minite;
+           $notification_array['video'] = isset($user->video)?url($user->video):"";
            // $notification_array['type'] = "remainder";
            // $notification_array['value_id'] = $event->id;
            // $notification_array['notificationdata'] = $notification_arr;
