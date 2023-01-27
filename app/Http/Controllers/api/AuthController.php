@@ -73,6 +73,7 @@ class AuthController extends BaseController
             $user = New User();
             $user->device_id = $request->device_id;
             $user->role = 3;
+            $user->role = 3;
             $user->save();
             //$data['token'] =  $user->createToken('Ohmet@13579WebV#d@n%p')->accessToken;
         }
@@ -90,6 +91,7 @@ class AuthController extends BaseController
         }
         $device->save();
         //$this->user_login_log($request,$user->id);
+        $user = User::where('id',$user->id)->first();
         $user->setAttribute('is_subscription', $user->tokenExpired());
         return $this->sendResponseWithData($user,"Device Token updated.");
     }
