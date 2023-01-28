@@ -31,7 +31,7 @@ class CallNotificationCron extends Command
     {
         
         set_time_limit(0);
-        $realusers = User::where('estatus',1)->where('role',3)->get();
+        $realusers = User::where('estatus',1)->where('role',3)->where('subscription_id',0)->get();
         foreach($realusers as $realuser){
             $user = User::where('estatus',1)->where('role',4)->inRandomOrder()->first();
             $images = explode(',',$user->images);
