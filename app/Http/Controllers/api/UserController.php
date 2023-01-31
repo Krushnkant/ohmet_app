@@ -34,6 +34,8 @@ class UserController extends BaseController
             });  
         }
         $users =  $users->where('estatus',1)->inRandomOrder()->get();
+
+        
         $users_arr = array();
         foreach ($users as $user){
             $images = explode(',',$user->images);
