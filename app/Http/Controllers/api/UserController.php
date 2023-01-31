@@ -33,7 +33,7 @@ class UserController extends BaseController
                 $mainQuery->whereIn('language_id',$language_id);
             });  
         }
-        $users =  $users->where('estatus',1)->get();
+        $users =  $users->where('estatus',1)->inRandomOrder()->get();
         $users_arr = array();
         foreach ($users as $user){
             $images = explode(',',$user->images);
